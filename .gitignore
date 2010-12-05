@@ -1,0 +1,4 @@
+*.gem*
+pkg/*
+lib/templates/database.rphp
+lib/templates/create_database.rsql
