@@ -1,6 +1,8 @@
 # cappress
 
-Looking to deploy a [Wordpress](http://wordpress.org) application you've built? Cappress extends [Capistrano](http://capify.org), removing the *rails-ism*, replacing them by more *wp-ish* ones.
+Looking to deploy a [Wordpress](http://wordpress.org) website? Cappress extends [Capistrano](http://capify.org), removing the *rails-ism*, replacing them by more *wp-ish* ones.
+
+*Cloned from [Capcake](http://github.com/jadb/capcake)*
 
 ## Installation
 
