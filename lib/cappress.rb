@@ -412,22 +412,34 @@ Capistrano::Configuration.instance(:must_exist).load do
         on_rollback { run "rm #{config_path}" }
         puts "Wordpress Configuration"
         _cset :db_host, defaults(Capistrano::CLI.ui.ask("hostname [localhost]:"), 'localhost')
-        _cset :db_login, defaults(Capistrano::CLI.ui.ask("username [#{user}]:"), user)
+        _cset :db_user, defaults(Capistrano::CLI.ui.ask("username [#{user}]:"), user)
         _cset :db_password, Capistrano::CLI.password_prompt("password:")
         _cset :db_name, defaults(Capistrano::CLI.ui.ask("db name [#{application}]:"), application)
-        _cset :db_prefix, Capistrano::CLI.ui.ask("prefix [wp_]:")
+        _cset :db_prefix, defaults(Capistrano::CLI.ui.ask("prefix [wp_]:"), 'wp_')
         _cset :db_charset, defaults(Capistrano::CLI.ui.ask("charset []:"), '')
         _cset :db_collate, defaults(Capistrano::CLI.ui.ask("encoding []:"), '')
+
+        _cset :key_auth, defaults(Capistrano::CLI.ui.ask("Auth Key []:"), '')
+        _cset :key_secure, defaults(Capistrano::CLI.ui.ask("Secure Auth Key []:"), '')
+        _cset :key_logged_in, defaults(Capistrano::CLI.ui.ask("Logged In Key []:"), '')
+        _cset :key_nonce, defaults(Capistrano::CLI.ui.ask("Nonce Key []:"), '')
+        _cset :salt_auth, defaults(Capistrano::CLI.ui.ask("Auth Salt []:"), '')
+        _cset :salt_secure, defaults(Capistrano::CLI.ui.ask("Secure Auth Sal []t:"), '')
+        _cset :salt_logged_in, defaults(Capistrano::CLI.ui.ask("Logged In Salt []:"), '')
+        _cset :salt_nonce, defaults(Capistrano::CLI.ui.ask("Nonce Salt []:"), '')
+
+        _cset :wplang, defaults(Capistrano::CLI.ui.ask("WPLANG []:"), '')
+        _cset :wpdebug, defaults(Capistrano::CLI.ui.ask("WP_DEBUG [false]:"), 'false')
 
         template = File.read(File.join(File.dirname(__FILE__), "templates", "wp-config.rphp"))
         result = ERB.new(template).result(binding)
 
-        put(result, "#{database_path}", :mode => 0644, :via => :scp)
+        put(result, "#{config_path}", :mode => 0644, :via => :scp)
         after("deploy:symlink", "wp:config:symlink")
       end
       desc <<-DESC
-        Creates required CakePHP's APP/config/database.php as a symlink to \
-        #{deploy_to}/shared/config/database.php
+        Creates required Wordpress's APP/wp-config.php as a symlink to \
+        #{deploy_to}/shared/wp-config.php
       DESC
       task :symlink, :roles => :web, :except => { :no_release => true } do
         run "#{try_sudo} ln -s #{config_path} #{current_path}/wp-config.php"
