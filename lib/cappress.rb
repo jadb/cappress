@@ -444,6 +444,12 @@ Capistrano::Configuration.instance(:must_exist).load do
         run "#{try_sudo} ln -s #{config_path} #{current_path}/wp-config.php"
       end
     end
+    desc <<-DESC
+      Creates a symlink for Wordpress' 'uploads' directory
+    DESC
+    task :symlink, :roles => :web, :except => { :no_release => true } do
+      run "#{try_sudo} ln -s #{uploads_path} #{current_path}/wp-content/uploads"
+    end
   end
 
 end # Capistrano::Configuration.instance(:must_exist).load do
