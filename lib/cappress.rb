@@ -90,7 +90,6 @@ Capistrano::Configuration.instance(:must_exist).load do
       dirs += shared_children.map { |d| File.join(shared_path, d) }
       run "#{try_sudo} mkdir -p #{(dirs).join(' ')} && #{try_sudo} chmod -R 777 #{uploads_path}" if (!user.empty?)
       set :git_flag_quiet, "-q "
-      wp.config.setup
     end
 
     desc <<-DESC
