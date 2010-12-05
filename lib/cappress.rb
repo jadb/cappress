@@ -36,7 +36,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
   set :git_flag_quiet,        ""
 
-  def capcake()
+  def cappress()
     set :deploy_to, "/var/www/#{application}" if (deploy_to.empty?)
     set(:current_path)        { File.join(deploy_to, current_dir) }
     set(:config_path)         { File.join(shared_path, "wp-config.php") }
