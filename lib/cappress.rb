@@ -45,7 +45,7 @@ Capistrano::Configuration.instance(:must_exist).load do
 
     after("deploy:setup", "wp:config:setup") if (!remote_file_exists?(config_path))
     after("deploy:symlink", "wp:config:symlink") if (remote_file_exists?(config_path))
-    after("deploy:symlink", "wp:symlink") if (remote_file_exists?(uploads_path))
+    after("deploy:symlink", "wp:symlink") if (!remote_file_exists?(uploads_path))
   end
 
   def defaults(val, default)
