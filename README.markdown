@@ -1,4 +1,4 @@
-# cappress
+# cappress ![Project status](http://stillmaintained.com/jadb/cappress.png)
 
 Looking to deploy a [Wordpress](http://wordpress.org) website? Cappress extends [Capistrano](http://capify.org), removing the *rails-ism*, replacing them by more *wp-ish* ones.
 
